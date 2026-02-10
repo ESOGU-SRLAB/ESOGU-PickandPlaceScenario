@@ -35,9 +35,7 @@ build the workspace
     colcon build
     source install/setup.bash
 ```
-Two primary systems can be run with this repository.
-
-System 1: UR10e robot with 2FG14 Gripper 
+UR10e robot with 2FG14 Gripper 
 
 ```bash
   ros2 launch my_robot_cell_gz gripperrobot_ifarlab_gazebo.launch.py use_gripper:=true
