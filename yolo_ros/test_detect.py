@@ -2,7 +2,7 @@
 from ultralytics import YOLO
 import cv2
 
-model = YOLO("/home/cem/colcon_ws/src/yolo_ros/best.pt")
+model = YOLO("/home/emirhan/colcon_ws/src/yolo_ros/best.pt")
 
 results = model.predict(
     source="/home/cem/Pictures/Screenshots/Screenshot from 2026-03-05 14-23-40.png",
@@ -22,5 +22,5 @@ for r in results:
         print(f"  {cls_name} ({conf:.2f}) -> [{x1:.0f}, {y1:.0f}, {x2:.0f}, {y2:.0f}]")
 
     annotated = r.plot()
-    cv2.imwrite("/home/cem/colcon_ws/src/yolo_ros/detection_result.png", annotated)
-    print("Sonuç kaydedildi: /home/cem/colcon_ws/src/yolo_ros/detection_result.png")
+    cv2.imwrite("/home/emirhan/colcon_ws/src/yolo_ros/detection_result.png", annotated)
+    print("Sonuç kaydedildi: /home/emirhan/colcon_ws/src/yolo_ros/detection_result.png")

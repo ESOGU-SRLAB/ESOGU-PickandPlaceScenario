@@ -39,7 +39,7 @@ def generate_launch_description():
         model = LaunchConfiguration("model")
         model_cmd = DeclareLaunchArgument(
             "model",
-            default_value="/home/cem/colcon_ws/src/yolo_ros/best.pt",
+            default_value="/home/emirhan/colcon_ws/src/yolo_ros/best.pt",
             description="Model name or path",
         )
 

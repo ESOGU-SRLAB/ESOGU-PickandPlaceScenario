@@ -35,11 +35,12 @@ def generate_launch_description():
                     )
                 ),
                 launch_arguments={
-                    "model": LaunchConfiguration("model", default="/home/cem/colcon_ws/src/yolo_ros/best.pt"),
+                    "model": LaunchConfiguration("model", default="/home/emirhan/colcon_ws/src/yolo_ros/best.pt"),
                     "tracker": LaunchConfiguration("tracker", default="bytetrack.yaml"),
                     "device": LaunchConfiguration("device", default="cpu"),
                     "enable": LaunchConfiguration("enable", default="True"),
-                    "threshold": LaunchConfiguration("threshold", default="0.3"),
+                    "threshold": LaunchConfiguration("threshold", default="0.35"),
+                    "augment": LaunchConfiguration("augment", default="True"),
                     "input_image_topic": LaunchConfiguration(
                         "input_image_topic", default="/sim/image"
                     ),
