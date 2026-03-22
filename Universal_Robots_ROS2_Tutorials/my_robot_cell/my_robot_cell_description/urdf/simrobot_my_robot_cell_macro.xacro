@@ -126,7 +126,9 @@
         <geometry>
           <mesh filename="file:////home/cem/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/conveyorbelt.stl" scale="0.001 0.001 0.001"/>
         </geometry>
-        <material name="silver"/>
+        <material name="green">
+          <color rgba="0 1 0 1"/>
+        </material>
       </visual>
       <collision>
         <origin rpy="0 0 0" xyz="0 0 0"/>
