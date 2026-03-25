@@ -32,7 +32,7 @@ class CupSortNode(Node):
     """2 aşamalı bardak sıralama: önce topla, sonra pick-and-place."""
 
     # Aynı bardak sayma mesafe eşiği (metre)
-    DEDUP_DISTANCE = 0.15
+    DEDUP_DISTANCE = 0.30
     # Gripper yönelimi: tool0 Z-ekseni world -Z (aşağı)
     # tf2_echo world sim_ur10e_tool0 çıktısından alınan değer
     GRIPPER_DOWN_QUAT = [0.363, 0.609, -0.587, 0.390]
@@ -166,31 +166,41 @@ class CupSortNode(Node):
                 score = det.score
                 cls = det.class_name
 
-                # Geçerlilik kontrolü
-                if by > 0.0 or bz < 0.75:
-                    self.get_logger().debug(
+                # Geçerlilik kontrolü (detection_to_3d'nin world_y_max=0.3 ile uyumlu)
+                if by > 0.3 or bz < 0.75:
+                    self.get_logger().info(
                         f"Filtrelendi [{cls}] ({bx:.3f}, {by:.3f}, {bz:.3f}): "
-                        f"by={by:.3f} > 0.0 veya bz={bz:.3f} < 0.75",
+                        f"by={by:.3f} > 0.3 veya bz={bz:.3f} < 0.75",
                         throttle_duration_sec=2.0,
                     )
                     continue
 
-                # Duplike kontrolü: mevcut listedeki en yakın bardak
+                # Duplike kontrolü: aynı sınıftaki en yakın bardak
                 merged = False
                 for cup in self._cup_list:
+                    if cup["class_name"] != cls:
+                        continue  # farklı sınıf — birleştirme
                     dist = math.sqrt(
                         (cup["x"] - bx) ** 2
                         + (cup["y"] - by) ** 2
                         + (cup["z"] - bz) ** 2
                     )
                     if dist < self.DEDUP_DISTANCE:
-                        # Aynı bardak — ilk pozisyonu koru, sadece sayacı artır
-                        cup["count"] += 1
+                        # Aynı bardak — pozisyonu running average ile güncelle
+                        n = cup["count"]
+                        cup["x"] = (cup["x"] * n + bx) / (n + 1)
+                        cup["y"] = (cup["y"] * n + by) / (n + 1)
+                        cup["z"] = (cup["z"] * n + bz) / (n + 1)
+                        cup["count"] = n + 1
                         # Sınıfı en yüksek skorlu tespitten al
                         if score > cup["score"]:
                             cup["score"] = score
                             cup["class_name"] = cls
                         merged = True
+                        self.get_logger().info(
+                            f"Merge #{cup['count']}: [{cls}] "
+                            f"avg=({cup['x']:.3f}, {cup['y']:.3f}, {cup['z']:.3f})"
+                        )
                         break
 
                 if not merged:

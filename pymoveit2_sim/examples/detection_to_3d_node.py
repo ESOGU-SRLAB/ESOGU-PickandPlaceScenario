@@ -62,11 +62,11 @@ def pointcloud2_to_xyz_fast(cloud_msg: PointCloud2) -> np.ndarray:
     oy = field_map["y"].offset
     oz = field_map["z"].offset
 
-    raw_points = raw[: n_points * point_step].reshape(n_points, point_step)
+    raw_points = np.ascontiguousarray(raw[: n_points * point_step].reshape(n_points, point_step))
 
-    x = raw_points[:, ox : ox + 4].view(np.float32).reshape(-1)
-    y = raw_points[:, oy : oy + 4].view(np.float32).reshape(-1)
-    z = raw_points[:, oz : oz + 4].view(np.float32).reshape(-1)
+    x = raw_points[:, ox : ox + 4].copy().view(np.float32).reshape(-1)
+    y = raw_points[:, oy : oy + 4].copy().view(np.float32).reshape(-1)
+    z = raw_points[:, oz : oz + 4].copy().view(np.float32).reshape(-1)
 
     pts = np.column_stack((x, y, z)).astype(np.float64)
 
@@ -99,10 +99,11 @@ class DetectionTo3DNode(Node):
 
     # DÜZELTİLDİ: camera_info frame_id ("sim_ur10e_imx179_camera") TF'de yok.
     # TF ağacındaki gerçek lens frame'i bu isim:
-    IMX_FRAME   = "sim_ur10e_IMX_Camera_frame_link"
+    IMX_FRAME   = "sim_ur10e_IMX_optical_frame"
 
     TARGET_FRAME    = "world"
-    MAX_RAY_DISTANCE = 0.08   # m — ray'e en fazla bu kadar uzak noktalar kabul edilir
+    MAX_RAY_DISTANCE = 0.20   # m — ray'e en fazla bu kadar uzak noktalar ARANIR
+    QUALITY_RAY_DIST = 0.08   # m — yayınlama için kalite eşiği (bunun üstü güvenilmez)
 
     def __init__(self):
         super().__init__("detection_to_3d_node")
@@ -115,6 +116,7 @@ class DetectionTo3DNode(Node):
         self.declare_parameter("world_z_min",      0.75)
         self.declare_parameter("world_z_max",      1.5)
         self.declare_parameter("world_y_max",      0.3)
+        self.declare_parameter("quality_ray_dist", self.QUALITY_RAY_DIST)
         self.declare_parameter("calib_offset_x",   0.0)   # ince kalibrasyon (gerekirse)
         self.declare_parameter("calib_offset_z",   0.0)
         self.declare_parameter("bbox3d_size_x",    0.08)
@@ -128,6 +130,7 @@ class DetectionTo3DNode(Node):
         self.world_z_min     = self.get_parameter("world_z_min").value
         self.world_z_max     = self.get_parameter("world_z_max").value
         self.world_y_max     = self.get_parameter("world_y_max").value
+        self.quality_ray_dist= self.get_parameter("quality_ray_dist").value
         self.calib_offset_x  = self.get_parameter("calib_offset_x").value
         self.calib_offset_z  = self.get_parameter("calib_offset_z").value
         self.bbox3d_size_x   = self.get_parameter("bbox3d_size_x").value
@@ -307,12 +310,22 @@ class DetectionTo3DNode(Node):
                 )
                 continue
 
+            best_dist = ray_info['best_dist']
             self.get_logger().info(
                 f"🎯 [{det.class_name}] bbox=({u:.0f},{v:.0f}) "
                 f"depth_pt=({best_pt[0]:.3f},{best_pt[1]:.3f},{best_pt[2]:.3f}) "
-                f"ray_dist={ray_info['best_dist']:.4f}m "
+                f"ray_dist={best_dist:.4f}m "
                 f"({ray_info['n_close']}/{ray_info['n_forward']} pts)"
             )
+
+            # Kalite filtresi: ray_dist çok büyükse güvenilmez (FOV dışı)
+            if best_dist > self.quality_ray_dist:
+                filtered_count += 1
+                self.get_logger().info(
+                    f"⚠️ [{det.class_name}] KALİTE DÜŞÜK: "
+                    f"ray_dist={best_dist:.4f}m > {self.quality_ray_dist}m — atlandı"
+                )
+                continue
 
             # Depth → world
             pos_world = R_depth_to_world @ best_pt + t_depth_to_world
