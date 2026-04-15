@@ -24,6 +24,7 @@
   <xacro:arg name="ur_input_recipe_filename" default="$(find ur_robot_driver)/resources/rtde_input_recipe.txt"/>
   <xacro:arg name="use_fake_hardware" default="false" />
   <xacro:arg name="fake_sensor_commands" default="false" />
+  <xacro:arg name="use_gripper" default="false" />
   <!--find hash_kinematics in kinematics_params-->
   <xacro:property name="kinematics_params_file" value="$(arg kinematics_params)"/>
   <xacro:property name="kinematics_hash" value="${xacro.load_yaml(kinematics_params_file)['kinematics']['hash']}"/>
@@ -42,6 +43,7 @@
     kinematics_parameters_file="$(arg kinematics_params)"
     physical_parameters_file="$(arg physical_params)"
     visual_parameters_file="$(arg visual_params)"
+    use_gripper="$(arg use_gripper)"
   >
     <origin xyz="0 0 0" rpy="0 0 0" />
   </xacro:my_robot_cell>
@@ -59,6 +61,7 @@
     use_fake_hardware="$(arg use_fake_hardware)"
     fake_sensor_commands="$(arg fake_sensor_commands)"
     headless_mode="$(arg headless_mode)"
+    use_gripper="$(arg use_gripper)"
   />
   <!--If you had more controlled devices in your description, e.g. a gripper, you can add another ros2_control tag here-->
 
