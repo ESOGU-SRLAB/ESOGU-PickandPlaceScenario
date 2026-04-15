@@ -81,6 +81,7 @@ def launch_setup(context, *args, **kwargs):
                     "initial_joint_controller": initial_joint_controller,
                     "activate_joint_controller": activate_joint_controller,
                     "headless_mode": headless_mode,
+                    "use_gripper": LaunchConfiguration("use_gripper"),
                 }.items(),
             ),
             # MoveIt config'i gerçek robot için namespace olmadan başlat
@@ -328,11 +329,33 @@ def launch_setup(context, *args, **kwargs):
     )
     simulation_actions.append(delayed_sim_launch)
 
+    # === GRIPPER CONTROLLER SPAWNER (use_gripper true ise) ===
+    gripper_actions = []
+    use_gripper_value = context.launch_configurations.get("use_gripper", "false")
+
+    if use_gripper_value.lower() == 'true':
+        gripper_controller_spawner = TimerAction(
+            period=10.0,
+            actions=[
+                Node(
+                    package="controller_manager",
+                    executable="spawner",
+                    arguments=["gripper_controller"],
+                    output="screen",
+                ),
+            ]
+        )
+        gripper_actions.append(gripper_controller_spawner)
+
     # Paralel başlatma için eylemler
     final_actions = []
     
     # Gerçek robot eylemlerini hemen başlat
     final_actions.extend(real_robot_actions)
+
+    # Gripper controller spawner ekle
+    if gripper_actions:
+        final_actions.extend(gripper_actions)
     
     # Simülasyon eylemlerini de ekle (paralel)
     if simulation_actions:
@@ -472,8 +495,15 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "sim_world_file",
-            default_value="/home/cem/colcon_ws/src/Universal_Robots_ROS2_Tutorials/my_robot_cell/my_robot_cell_gz/worlds/digital_twin_world.sdf",
+            default_value="/home/emirhan/colcon_ws/src/Universal_Robots_ROS2_Tutorials/my_robot_cell/my_robot_cell_gz/worlds/digital_twin_world.sdf",
             description="Gazebo world file path.",
+        )
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "use_gripper",
+            default_value="false",
+            description="Enable gripper on the robot.",
         )
     )
 
