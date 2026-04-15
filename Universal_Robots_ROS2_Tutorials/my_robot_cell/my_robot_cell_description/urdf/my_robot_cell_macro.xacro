@@ -13,7 +13,8 @@
     visual_parameters_file
     sim_ignition:=false
     use_fake_hardware:=false
-    tf_prefix:='ur10e_'   
+    tf_prefix:='ur10e_'
+    use_gripper:=false
     ">
     <!-- no prefix for real robot, robot1_ for sim -->
     <material name="silver">
@@ -33,14 +34,14 @@
       <visual>
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
-          <mesh filename="file:////home/cem/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/base_link.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file:////home/emirhan/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/base_link.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="silver"/>
       </visual>
       <collision>
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
-          <mesh filename="file:////home/cem/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/base_link.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file:////home/emirhan/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/base_link.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
     </link>
@@ -62,7 +63,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="file:////home/cem/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/chassis.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file:////home/emirhan/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/chassis.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="chassis_material">
           <color rgba="0.7 0.7 0.7 1"/>
@@ -72,7 +73,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="file:////home/cem/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/chassis.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file:////home/emirhan/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/chassis.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
     </link>
@@ -87,14 +88,14 @@
       <visual>
         <origin rpy="0 0 0" xyz="0.158 -0.115 -0.58635"/>
         <geometry>
-          <mesh filename="file:////home/cem/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/linear_axis_moving_link.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file:////home/emirhan/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/linear_axis_moving_link.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="silver"/>
       </visual>
       <collision>
         <origin rpy="0 0 0" xyz="0.158 -0.115 -0.58635"/>
         <geometry>
-          <mesh filename="file:////home/cem/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/linear_axis_moving_link.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file:////home/emirhan/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/linear_axis_moving_link.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
     </link>
@@ -108,14 +109,14 @@
       <visual>
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
-          <mesh filename="file:////home/cem/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/wall_door.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file:////home/emirhan/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/wall_door.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="silver"/>
       </visual>
       <collision>
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
-          <mesh filename="file:////home/cem/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/wall_door.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file:////home/emirhan/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/wall_door.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
     </link>
@@ -129,14 +130,14 @@
       <visual>
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
-          <mesh filename="file:////home/cem/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/wall_server.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file:////home/emirhan/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/wall_server.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="silver"/>
       </visual>
       <collision>
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
-          <mesh filename="file:////home/cem/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/wall_server.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file:////home/emirhan/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/wall_server.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
     </link> -->
@@ -150,14 +151,14 @@
       <visual>
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
-          <mesh filename="file:////home/cem/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/alumuniumtable.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file:////home/emirhan/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/alumuniumtable.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="silver"/>
       </visual>
       <collision>
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
-          <mesh filename="file:////home/cem/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/alumuniumtable.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file:////home/emirhan/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/alumuniumtable.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
     </link>
@@ -171,14 +172,14 @@
       <visual>
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
-          <mesh filename="file:////home/cem/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/conveyorbelt.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file:////home/emirhan/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/conveyorbelt.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="silver"/>
       </visual>
       <collision>
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
-          <mesh filename="file:////home/cem/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/conveyorbelt.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file:////home/emirhan/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/conveyorbelt.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
     </link>
@@ -198,7 +199,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="file:////home/cem/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/stackable_bin.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file:////home/emirhan/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/stackable_bin.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="silver"/>
       </visual>
@@ -206,7 +207,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="file:////home/cem/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/stackable_bin.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file:////home/emirhan/colcon_ws/src/Universal_Robots_ROS2_Description/meshes/ur10e/collision/stackable_bin.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
     </link>
@@ -309,6 +310,7 @@
       visual_parameters_file="${visual_parameters_file}"
       generate_ros2_control_tag="false" 
       sim_ignition="${sim_ignition}"
+      use_gripper="${use_gripper}"
     >
       <origin xyz="0 0 0" rpy="0 0 0" />
     </xacro:ur_robot>
