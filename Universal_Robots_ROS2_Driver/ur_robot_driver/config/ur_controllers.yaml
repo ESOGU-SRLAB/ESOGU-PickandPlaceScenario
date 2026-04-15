@@ -45,6 +45,9 @@ controller_manager:
     tool_contact_controller:
       type: ur_controllers/ToolContactController
 
+    gripper_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
 speed_scaling_state_broadcaster:
   ros__parameters:
     state_publish_rate: 100.0
@@ -184,3 +187,19 @@ tcp_pose_broadcaster:
 tool_contact_controller:
   ros__parameters:
     tf_prefix: "$(var tf_prefix)"
+
+# Gripper Controller
+gripper_controller:
+  ros__parameters:
+    joints:
+      - $(var tf_prefix)gripper_joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    gains:
+      $(var tf_prefix)gripper_joint:
+        p: 1000.0
+        i: 10.0
+        d: 50.0
