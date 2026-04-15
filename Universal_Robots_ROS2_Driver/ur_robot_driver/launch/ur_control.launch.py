@@ -82,6 +82,7 @@ def launch_setup(context, *args, **kwargs):
     reverse_port = LaunchConfiguration("reverse_port")
     script_sender_port = LaunchConfiguration("script_sender_port")
     trajectory_port = LaunchConfiguration("trajectory_port")
+    use_gripper = LaunchConfiguration("use_gripper")
 
     joint_limit_params = PathJoinSubstitution(
         [FindPackageShare(description_package), "config", ur_type, "joint_limits.yaml"]
@@ -197,6 +198,9 @@ def launch_setup(context, *args, **kwargs):
             " ",
             "trajectory_port:=",
             trajectory_port,
+            " ",
+            "use_gripper:=",
+            use_gripper,
             " ",
         ]
     )
@@ -657,6 +661,13 @@ def generate_launch_description():
             "trajectory_port",
             default_value="50003",
             description="Port that will be opened for trajectory control.",
+        )
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "use_gripper",
+            default_value="false",
+            description="Enable gripper on the robot.",
         )
     )
     return LaunchDescription(declared_arguments + [OpaqueFunction(function=launch_setup)])
