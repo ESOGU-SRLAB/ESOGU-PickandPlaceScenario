@@ -6,7 +6,7 @@
 
   <xacro:macro name="onrobot_2fg7" params="prefix parent *origin">
 
-    <link name="${prefix}base_link">
+    <link name="${prefix}gripper_base_link">
       <inertial>
         <origin xyz="0.046201794305521515 0.04641351769017876 -0.017675503740650633" rpy="0 0 0"/>
         <mass value="4.92893092862587"/>
@@ -29,7 +29,7 @@
       </collision>
     </link>
 
-    <link name="${prefix}ur10e_gripper_upper_1">
+    <link name="${prefix}gripper_upper_1">
       <inertial>
         <origin xyz="0.009933945618336715 0.020191952923398593 0.002410109555269213" rpy="0 0 0"/>
         <mass value="0.15599517357950826"/>
@@ -52,7 +52,7 @@
       </collision>
     </link>
 
-    <link name="${prefix}ur10e_gripper_lower_1">
+    <link name="${prefix}gripper_lower_1">
       <inertial>
         <origin xyz="0.009953097781983722 0.020157371452492412 -0.0024101337743568374" rpy="0 0 0"/>
         <mass value="0.15599517357965467"/>
@@ -75,28 +75,28 @@
       </collision>
     </link>
 
-    <joint name="${prefix}ur10e_gripper_joint" type="prismatic">
+    <joint name="${prefix}gripper_joint" type="prismatic">
       <origin xyz="0.096302 0.061001 0.032072" rpy="0 0 0"/>
-      <parent link="${prefix}base_link"/>
-      <child link="${prefix}ur10e_gripper_upper_1"/>
+      <parent link="${prefix}gripper_base_link"/>
+      <child link="${prefix}gripper_upper_1"/>
       <axis xyz="0.0 0.0 -1.0"/>
       <!-- limits extended ±0.001 beyond nominal 0..0.025 range to work around DART servo bug -->
       <limit upper="0.026" lower="-0.001" effort="1000" velocity="10"/>
     </joint>
 
-    <joint name="${prefix}ur10e_right_finger_joint" type="prismatic">
+    <joint name="${prefix}right_finger_joint" type="prismatic">
       <origin xyz="0.096302 0.061001 -0.067428" rpy="0 0 0"/>
-      <parent link="${prefix}base_link"/>
-      <child link="${prefix}ur10e_gripper_lower_1"/>
+      <parent link="${prefix}gripper_base_link"/>
+      <child link="${prefix}gripper_lower_1"/>
       <axis xyz="0.0 0.0 -1.0"/>
-      <mimic joint="${prefix}ur10e_gripper_joint" multiplier="-1.0"/>
+      <mimic joint="${prefix}gripper_joint" multiplier="-1.0"/>
       <!-- limits extended ±0.001 beyond nominal -0.025..0 range to work around DART servo bug -->
       <limit upper="0.001" lower="-0.026" effort="1000" velocity="10"/>
     </joint>
 
-    <joint name="${prefix}ur10e_2fg7_attach_joint" type="fixed">
+    <joint name="${prefix}2fg7_attach_joint" type="fixed">
       <parent link="${parent}"/>
-      <child link="${prefix}base_link"/>
+      <child link="${prefix}gripper_base_link"/>
       <xacro:insert_block name="origin"/>
       <axis xyz="0 0 1"/>
     </joint>

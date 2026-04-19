@@ -19,7 +19,7 @@
         </xacro:if>
       </hardware>
 
-      <joint name="${prefix}ur10e_gripper_joint">
+      <joint name="${prefix}gripper_joint">
         <state_interface name="position"/>
         <state_interface name="velocity"/>
         <command_interface name="position"/>

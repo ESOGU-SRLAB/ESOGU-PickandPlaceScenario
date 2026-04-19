@@ -8,12 +8,12 @@
     <xacro:arg name="velocity_filtering" default="" />
     <xacro:arg name="use_mock_hardware" default="false"/>
 
-    <xacro:include filename="$(find ur_description)/urdf/ur_macro.xacro"/>
+    <!-- <xacro:include filename="$(find ur_description)/urdf/ur_macro.xacro"/> -->
 
     <xacro:include filename="$(find onrobot_2fg7_description)/urdf/onrobot_2fg7.xacro"/>
     <xacro:include filename="$(find onrobot_2fg7_description)/ros2_control/onrobot_2fg7.ros2_control.xacro"/>
 
-    <link name="world"></link>
+    <!-- <link name="world"></link>
 
     <xacro:ur_robot
         name="ur10e"
@@ -27,7 +27,7 @@
         sim_gazebo="false"
         sim_ignition="false">
         <origin xyz="0 0 0" rpy="0 0 0"/>
-    </xacro:ur_robot>
+    </xacro:ur_robot> -->
 
     <xacro:onrobot_2fg7 prefix="$(arg prefix)" parent="ur_tool0">
         <origin xyz="0.045576 0.040897 0.017678" rpy="0 0 0"/>
