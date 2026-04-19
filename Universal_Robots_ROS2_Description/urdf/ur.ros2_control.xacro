@@ -368,7 +368,7 @@
           <state_interface name="get_version_bugfix"/>
         </gpio>
       </xacro:unless>
-      <xacro:if value="${use_gripper}">
+    <!-- <xacro:if value="${use_gripper}">
         <joint name="${tf_prefix}gripper_joint">
           <command_interface name="position"/>
           <state_interface name="position">
@@ -385,7 +385,7 @@
           <state_interface name="velocity"/>
           <state_interface name="effort"/>
         </joint>
-      </xacro:if>
+      </xacro:if>--> 
 
 
     </ros2_control>
